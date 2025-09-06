@@ -40,3 +40,23 @@ TEST(RBTreeTest, insert_duplicate) {
     EXPECT_EQ(tree.get_root()->left_, nullptr);
     EXPECT_EQ(tree.get_root()->right_, nullptr);
 }
+
+TEST(RBTreeTest, left_rotate) {
+    RBTree<int> tree;
+    tree.insert(10);
+    tree.insert(20);
+    tree.insert(5);
+    
+    // TODO: После реализации fix_insert добавить проверки поворотов
+    SUCCEED();
+}
+
+TEST(RBTreeTest, right_rotate) {
+    RBTree<int> tree;
+    tree.insert(20);
+    tree.insert(10);
+    tree.insert(5);
+    
+    // TODO: После реализации fix_insert добавить проверки поворотов
+    SUCCEED();
+}
