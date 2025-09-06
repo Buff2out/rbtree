@@ -1,5 +1,5 @@
-#ifndef BALANCING_TPP
-#define BALANCING_TPP
+#ifndef BALANCING_HPP
+#define BALANCING_HPP
 
 #include "rbtree.h"
 
