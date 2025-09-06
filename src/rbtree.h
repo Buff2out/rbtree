@@ -79,10 +79,4 @@ void RBTree<T, Compare>::clear(Node<T>* node) {
     }
 }
 
-#include "operators.hpp"
-
-#include "balancing.hpp"
-
-#include "insert.hpp"
-
 #endif // RBTREE_H
