@@ -1,6 +1,7 @@
 # Компилятор и флаги
 CXX = clang++
 CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g -O0 -I./src
+CPPDEBUG = -std=c++20 -g -O0 -I./src
 GTEST_LIBS = -lgtest -lgtest_main -lpthread
 
 # Директории
@@ -38,7 +39,7 @@ test: $(TEST_EXEC)
 
 # Сборка main
 $(MAIN_EXEC): $(MAIN_SRC) $(HEADERS) | $(TEST_BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(MAIN_SRC) -o $(MAIN_EXEC) $(GTEST_LIBS)
+	$(CXX) $(CPPDEBUG) $(MAIN_SRC) -o $(MAIN_EXEC) $(GTEST_LIBS)
 
 main: $(MAIN_EXEC)
 

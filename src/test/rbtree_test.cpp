@@ -101,3 +101,26 @@ TEST(RBTreeTest, insert_recoloring) {
     EXPECT_EQ(root->right_->color_, Color::Black);
     EXPECT_EQ(root->left_->left_->color_, Color::Red);
 }
+
+// Тест визуализации (для отладки)
+TEST(RBTreeTest, visualize_tree) {
+    RBTree<int> tree;
+    tree.insert(50);
+    tree.insert(30);
+    tree.insert(70);
+    tree.insert(20);
+    tree.insert(40);
+    tree.insert(60);
+    tree.insert(80);
+    
+    // Просто проверяем что метод вызывается без ошибок
+    EXPECT_NO_THROW(tree.visualize());
+    
+    tree.visualize();
+}
+
+// Тест визуализации пустого дерева
+TEST(RBTreeTest, visualize_empty_tree) {
+    RBTree<int> tree;
+    EXPECT_NO_THROW(tree.visualize());
+}

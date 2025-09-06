@@ -34,6 +34,8 @@ public:
     void insert(const T& val_);
     [[nodiscard]] Node<T>* get_root() const { return root_; }
 
+    void visualize() const;
+
 private:
     Node<T>* root_;
     Compare comp_;
@@ -81,5 +83,6 @@ void RBTree<T, Compare>::clear(Node<T>* node) {
 #include "operators.hpp"
 #include "balancing.hpp"
 #include "insert.hpp"
+#include "visualize.hpp"
 
 #endif // RBTREE_H
