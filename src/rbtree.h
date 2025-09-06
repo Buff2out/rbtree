@@ -70,8 +70,6 @@ RBTree<T, Compare>::RBTree(RBTree&& other) noexcept
     other.root_ = nullptr;
 }
 
-#include "operators.tpp"
-
 template <typename T, typename Compare>
 void RBTree<T, Compare>::clear(Node<T>* node) {
     if (node) {
@@ -81,8 +79,10 @@ void RBTree<T, Compare>::clear(Node<T>* node) {
     }
 }
 
-#include "balancing.tpp"
+#include "operators.hpp"
 
-#include "insert.tpp"
+#include "balancing.hpp"
+
+#include "insert.hpp"
 
 #endif // RBTREE_H

@@ -1,5 +1,5 @@
-#ifndef INSERT_TPP
-#define INSERT_TPP
+#ifndef INSERT_HPP
+#define INSERT_HPP
 
 #include "rbtree.h"
 

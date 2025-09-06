@@ -1,3 +1,6 @@
+#ifndef OPERATORS_HPP
+#define OPERATORS_HPP
+
 #include "rbtree.h"
 
 template <typename T, typename Compare>
@@ -20,3 +23,5 @@ RBTree<T, Compare>& RBTree<T, Compare>::operator=(RBTree&& other) noexcept {
     }
     return *this;
 }
+
+#endif
