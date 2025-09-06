@@ -41,4 +41,52 @@ void RBTree<T, Compare>::right_rotate(Node<T>* up_to_rightdown) { // 6-7 сва�
     up_to_rightdown->parent_ = downleft_to_up;
 }
 
+template <typename T, typename Compare>
+void RBTree<T, Compare>::fix_insert(Node<T>* k) {
+    while (k != root_ && k->parent_->color_ == Color::Red) {
+        if (k->parent_ == k->parent_->parent_->left_) {
+            Node<T>* uncle = k->parent_->parent_->right_;
+            
+            // Case 1: Uncle is red
+            if (uncle && uncle->color_ == Color::Red) {
+                k->parent_->color_ = Color::Black;
+                uncle->color_ = Color::Black;
+                k->parent_->parent_->color_ = Color::Red;
+                k = k->parent_->parent_;
+            } else {
+                // Case 2: k is right child
+                if (k == k->parent_->right_) {
+                    k = k->parent_;
+                    left_rotate(k);
+                }
+                // Case 3: k is left child
+                k->parent_->color_ = Color::Black;
+                k->parent_->parent_->color_ = Color::Red;
+                right_rotate(k->parent_->parent_);
+            }
+        } else {
+            Node<T>* uncle = k->parent_->parent_->left_;
+            
+            // Case 1: Uncle is red
+            if (uncle && uncle->color_ == Color::Red) {
+                k->parent_->color_ = Color::Black;
+                uncle->color_ = Color::Black;
+                k->parent_->parent_->color_ = Color::Red;
+                k = k->parent_->parent_;
+            } else {
+                // Case 2: k is left child
+                if (k == k->parent_->left_) {
+                    k = k->parent_;
+                    right_rotate(k);
+                }
+                // Case 3: k is right child
+                k->parent_->color_ = Color::Black;
+                k->parent_->parent_->color_ = Color::Red;
+                left_rotate(k->parent_->parent_);
+            }
+        }
+    }
+    root_->color_ = Color::Black;
+}
+
 #endif

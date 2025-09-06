@@ -1,7 +1,7 @@
 # Компилятор и флаги
 CXX = clang++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g -O0 -I./src -I/usr/include
-CPPMAIN = -std=c++20 -g -O0 -I./src -I/usr/include
+CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g -O0 -I./src
+GTEST_LIBS = -lgtest -lgtest_main -lpthread
 
 # Директории
 SRC_DIR = src
@@ -10,19 +10,16 @@ BUILD_DIR = build
 TEST_BUILD_DIR = $(BUILD_DIR)/test
 
 # Исходные файлы
-RBTREE_SRC = $(SRC_DIR)/rbtree.h
+HEADERS = $(SRC_DIR)/rbtree.h $(SRC_DIR)/balancing.hpp $(SRC_DIR)/insert.hpp $(SRC_DIR)/operators.hpp
 TEST_SRC = $(TEST_DIR)/rbtree_test.cpp
-MAIN_SRC = src/main.cpp
+MAIN_SRC = $(SRC_DIR)/main.cpp
 
 # Исполняемые файлы
 TEST_EXEC = $(TEST_BUILD_DIR)/rbtree_test
 MAIN_EXEC = $(TEST_BUILD_DIR)/rbtree_main
 
-# Google Test флаги
-GTEST_LIBS = -lgtest -lgtest_main -lpthread
-
 # Цели по умолчанию
-all: build test
+all: test
 
 # Создание директорий
 $(BUILD_DIR):
@@ -32,20 +29,21 @@ $(TEST_BUILD_DIR): $(BUILD_DIR)
 	mkdir -p $(TEST_BUILD_DIR)
 
 # Сборка тестов
-build: $(TEST_EXEC)
-
-$(TEST_EXEC): $(RBTREE_SRC) $(TEST_SRC) | $(TEST_BUILD_DIR)
+$(TEST_EXEC): $(TEST_SRC) $(HEADERS) | $(TEST_BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(TEST_SRC) -o $(TEST_EXEC) $(GTEST_LIBS)
 
 # Запуск тестов
-test: build
+test: $(TEST_EXEC)
 	$(TEST_EXEC)
 
-main:
-	$(CXX) $(CPPMAIN) $(MAIN_SRC) -o $(MAIN_EXEC) -lpthread
+# Сборка main
+$(MAIN_EXEC): $(MAIN_SRC) $(HEADERS) | $(TEST_BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(MAIN_SRC) -o $(MAIN_EXEC) $(GTEST_LIBS)
+
+main: $(MAIN_EXEC)
 
 # Запуск с valgrind для проверки утечек памяти
-valgrind: build
+valgrind: $(TEST_EXEC)
 	valgrind --leak-check=full --track-origins=yes --error-exitcode=1 $(TEST_EXEC)
 
 # Очистка
@@ -55,4 +53,4 @@ clean:
 # Пересборка
 rebuild: clean all
 
-.PHONY: all build test valgrind clean rebuild
+.PHONY: all test main valgrind clean rebuild

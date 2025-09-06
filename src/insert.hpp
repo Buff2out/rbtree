@@ -31,7 +31,8 @@ void RBTree<T, Compare>::insert(const T& val_) {
     } else {
         parent_->right_ = new_node;
     }
-    // TODO: Реализовать полную вставку с компаратором
+    
+    fix_insert(new_node);
 }
 
 #endif

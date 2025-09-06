@@ -41,22 +41,63 @@ TEST(RBTreeTest, insert_duplicate) {
     EXPECT_EQ(tree.get_root()->right_, nullptr);
 }
 
-TEST(RBTreeTest, left_rotate) {
+// Проверка балансировки после вставки (левый поворот)
+TEST(RBTreeTest, insert_balance_left_rotate) {
     RBTree<int> tree;
     tree.insert(10);
     tree.insert(20);
-    tree.insert(5);
+    tree.insert(30); // Должен вызвать левый поворот
     
-    // TODO: После реализации fix_insert добавить проверки поворотов
-    SUCCEED();
+    Node<int>* root = tree.get_root();
+    ASSERT_NE(root, nullptr);
+    EXPECT_EQ(root->val_, 20);
+    EXPECT_EQ(root->color_, Color::Black);
+    
+    ASSERT_NE(root->left_, nullptr);
+    EXPECT_EQ(root->left_->val_, 10);
+    EXPECT_EQ(root->left_->color_, Color::Red);
+    
+    ASSERT_NE(root->right_, nullptr);
+    EXPECT_EQ(root->right_->val_, 30);
+    EXPECT_EQ(root->right_->color_, Color::Red);
 }
 
-TEST(RBTreeTest, right_rotate) {
+// Проверка балансировки после вставки (правый поворот)
+TEST(RBTreeTest, insert_balance_right_rotate) {
+    RBTree<int> tree;
+    tree.insert(30);
+    tree.insert(20);
+    tree.insert(10); // Должен вызвать правый поворот
+    
+    Node<int>* root = tree.get_root();
+    ASSERT_NE(root, nullptr);
+    EXPECT_EQ(root->val_, 20);
+    EXPECT_EQ(root->color_, Color::Black);
+    
+    ASSERT_NE(root->left_, nullptr);
+    EXPECT_EQ(root->left_->val_, 10);
+    EXPECT_EQ(root->left_->color_, Color::Red);
+    
+    ASSERT_NE(root->right_, nullptr);
+    EXPECT_EQ(root->right_->val_, 30);
+    EXPECT_EQ(root->right_->color_, Color::Red);
+}
+
+// Проверка перекрашивания (case 1)
+TEST(RBTreeTest, insert_recoloring) {
     RBTree<int> tree;
     tree.insert(20);
     tree.insert(10);
-    tree.insert(5);
+    tree.insert(30);
+    tree.insert(5); // Должен вызвать перекрашивание
     
-    // TODO: После реализации fix_insert добавить проверки поворотов
-    SUCCEED();
+    Node<int>* root = tree.get_root();
+    ASSERT_NE(root, nullptr);
+    EXPECT_EQ(root->val_, 20);
+    EXPECT_EQ(root->color_, Color::Black);
+    
+    // Проверяем что перекрашивание сработало
+    EXPECT_EQ(root->left_->color_, Color::Black);
+    EXPECT_EQ(root->right_->color_, Color::Black);
+    EXPECT_EQ(root->left_->left_->color_, Color::Red);
 }
