@@ -1,9 +1,9 @@
 #include "rbtree.h"
 
 int main () {
-    RBTree tree;
+    RBTree<int> tree;
     tree.insert(10);
     tree.insert(20);
     
-    Node* root = tree.get_root();
+    Node<int>* root = tree.get_root();
 }
