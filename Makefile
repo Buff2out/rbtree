@@ -20,7 +20,7 @@ TEST_EXEC = $(TEST_BUILD_DIR)/rbtree_test
 MAIN_EXEC = $(TEST_BUILD_DIR)/rbtree_main
 
 # Цели по умолчанию
-all: test
+all: clean valgrind
 
 # Создание директорий
 $(BUILD_DIR):

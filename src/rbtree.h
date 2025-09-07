@@ -33,6 +33,8 @@ public:
     RBTree& operator=(RBTree&& other) noexcept;
     void insert(const T& val_);
     [[nodiscard]] Node<T>* get_root() const { return root_; }
+    [[nodiscard]] Node<T>* find(const T& val_) const;
+    [[nodiscard]] bool contains(const T& val_) const;
 
     void visualize() const;
 
@@ -83,6 +85,7 @@ void RBTree<T, Compare>::clear(Node<T>* node) {
 #include "operators.hpp"
 #include "balancing.hpp"
 #include "insert.hpp"
+#include "search.hpp"
 #include "visualize.hpp"
 
 #endif // RBTREE_H

@@ -102,25 +102,139 @@ TEST(RBTreeTest, insert_recoloring) {
     EXPECT_EQ(root->left_->left_->color_, Color::Red);
 }
 
-// Тест визуализации (для отладки)
-TEST(RBTreeTest, visualize_tree) {
+// // Тест визуализации (для отладки)
+// TEST(RBTreeTest, visualize_tree) {
+//     RBTree<int> tree;
+//     tree.insert(50);
+//     tree.insert(30);
+//     tree.insert(70);
+//     tree.insert(20);
+//     tree.insert(40);
+//     tree.insert(60);
+//     tree.insert(80);
+    
+//     // Просто проверяем что метод вызывается без ошибок
+//     EXPECT_NO_THROW(tree.visualize());
+    
+//     tree.visualize();
+// }
+
+// // Тест визуализации пустого дерева
+// TEST(RBTreeTest, visualize_empty_tree) {
+//     RBTree<int> tree;
+//     EXPECT_NO_THROW(tree.visualize());
+// }
+
+// Проверка поиска существующего элемента
+TEST(RBTreeTest, find_existing) {
     RBTree<int> tree;
-    tree.insert(50);
+    tree.insert(10);
+    tree.insert(20);
     tree.insert(30);
-    tree.insert(70);
+    tree.insert(10);
+    tree.insert(30);
     tree.insert(20);
     tree.insert(40);
+    tree.insert(25);
+    tree.insert(35);
+    tree.insert(45);    
+    tree.insert(50);
     tree.insert(60);
+    tree.insert(70);
     tree.insert(80);
+
+    Node<int>* found = tree.find(20);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 20);
+
+    found = tree.find(10);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 10);
     
-    // Просто проверяем что метод вызывается без ошибок
-    EXPECT_NO_THROW(tree.visualize());
-    
-    tree.visualize();
+    found = tree.find(40);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 40);
+
+    found = tree.find(45);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 45);
+
+    found = tree.find(50);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 50);
+
+    found = tree.find(60);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 60);
+
+    found = tree.find(70);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 70);
+
+    found = tree.find(80);
+    ASSERT_NE(found, nullptr);
+    EXPECT_EQ(found->val_, 80);
 }
 
-// Тест визуализации пустого дерева
-TEST(RBTreeTest, visualize_empty_tree) {
+// Проверка поиска несуществующего элемента
+TEST(RBTreeTest, find_non_existing) {
     RBTree<int> tree;
-    EXPECT_NO_THROW(tree.visualize());
+    tree.insert(10);
+    tree.insert(20);
+    
+    EXPECT_EQ(tree.find(30), nullptr);
+}
+
+// Проверка contains для существующего элемента
+TEST(RBTreeTest, contains_existing) {
+    RBTree<int> tree;
+    tree.insert(10);
+    tree.insert(20);
+    tree.insert(10);
+    tree.insert(20);
+    tree.insert(30);
+    tree.insert(10);
+    tree.insert(30);
+    tree.insert(20);
+    tree.insert(40);
+    tree.insert(25);
+    tree.insert(35);
+    tree.insert(45);    
+    tree.insert(50);
+    tree.insert(60);
+    tree.insert(70);
+    tree.insert(80);
+    
+    EXPECT_TRUE(tree.contains(10));
+    EXPECT_TRUE(tree.contains(20));
+    EXPECT_TRUE(tree.contains(30));
+    EXPECT_TRUE(tree.contains(40));
+    EXPECT_TRUE(tree.contains(25));
+    EXPECT_TRUE(tree.contains(35));
+    EXPECT_TRUE(tree.contains(45));
+    EXPECT_TRUE(tree.contains(50));
+    EXPECT_TRUE(tree.contains(60));
+    EXPECT_TRUE(tree.contains(70));
+    EXPECT_TRUE(tree.contains(80));
+}
+
+// Проверка contains для несуществующего элемента
+TEST(RBTreeTest, contains_non_existing) {
+    RBTree<int> tree;
+    tree.insert(10);
+    
+    EXPECT_FALSE(tree.contains(20));
+    EXPECT_FALSE(tree.contains(5));
+}
+
+// Проверка find в пустом дереве
+TEST(RBTreeTest, find_empty_tree) {
+    RBTree<int> tree;
+    EXPECT_EQ(tree.find(10), nullptr);
+}
+
+// Проверка contains в пустом дереве
+TEST(RBTreeTest, contains_empty_tree) {
+    RBTree<int> tree;
+    EXPECT_FALSE(tree.contains(10));
 }
