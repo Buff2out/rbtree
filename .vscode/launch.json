@@ -7,18 +7,11 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "main",
+            "name": "Launch",
             "program": "${workspaceFolder}/build/test/rbtree_main",
             "args": [],
             "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "test",
-            "program": "${workspaceFolder}/build/test/rbtree_test",
-            "args": [],
-            "cwd": "${workspaceFolder}"
         }
+
     ]
 }

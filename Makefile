@@ -1,12 +1,12 @@
 # Компилятор и флаги
 CXX = clang++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g -O0 -I./src
-CPPDEBUG = -std=c++20 -g -O0 -I./src
+CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g -O0 -I./.
+CPPDEBUG = -std=c++20 -g -O0 -I./.
 GTEST_LIBS = -lgtest -lgtest_main -lpthread
 
 # Директории
-SRC_DIR = src
-TEST_DIR = src/test
+SRC_DIR = .
+TEST_DIR = ./test
 BUILD_DIR = build
 TEST_BUILD_DIR = $(BUILD_DIR)/test
 
@@ -41,7 +41,7 @@ test: $(TEST_EXEC)
 $(MAIN_EXEC): $(MAIN_SRC) $(HEADERS) | $(TEST_BUILD_DIR)
 	$(CXX) $(CPPDEBUG) $(MAIN_SRC) -o $(MAIN_EXEC) $(GTEST_LIBS)
 
-main: $(MAIN_EXEC)
+main: clean $(MAIN_EXEC)
 
 # Запуск с valgrind для проверки утечек памяти
 valgrind: $(TEST_EXEC)
